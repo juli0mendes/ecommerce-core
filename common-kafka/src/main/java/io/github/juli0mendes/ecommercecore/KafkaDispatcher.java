@@ -11,11 +11,11 @@ import java.util.concurrent.ExecutionException;
 
 import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
-public class KafkaDipatcher<T> implements Closeable {
+public class KafkaDispatcher<T> implements Closeable {
 
     private final KafkaProducer<String, T> producer;
 
-    public KafkaDipatcher() {
+    public KafkaDispatcher() {
         this.producer = new KafkaProducer<>(properties());
     }
 
