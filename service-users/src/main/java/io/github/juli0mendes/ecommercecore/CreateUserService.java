@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.UUID;
 
 public class CreateUserService {
 
@@ -14,10 +15,15 @@ public class CreateUserService {
     public CreateUserService() throws SQLException {
         String url = "jdbc:sqlite:service-users/target/users_database.db";
         this.connection = DriverManager.getConnection(url);
-        connection.createStatement()
-                .execute("create table Users (" +
-                        "uuid varchat(200) primary key," +
-                        "email varchar(200))");
+        try {
+            connection.createStatement()
+                    .execute("create table Users (" +
+                            "uuid varchat(200) primary key," +
+                            "email varchar(200))");
+        } catch (SQLException ex) {
+            // be careful, the sql could be wrong, be really careful
+            ex.printStackTrace();
+        }
     }
 
     public static void main(String[] args) throws SQLException {
@@ -50,7 +56,7 @@ public class CreateUserService {
     private void insertNewUser(String email) throws SQLException {
         var insert = this.connection.prepareStatement("insert into Users (uuid, email) " +
                 "values (?, ?) ");
-        insert.setString(1, "uuid");
+        insert.setString(1, UUID.randomUUID().toString());
         insert.setString(2, email);
         insert.execute();
 
@@ -60,7 +66,7 @@ public class CreateUserService {
 
     private boolean isNewUser(String email) throws SQLException {
         var exists = this.connection.prepareStatement("select uuid from Users " +
-                "where email = ? limite 1");
+                "where email = ? limit 1");
         exists.setString(1, email);
 
         var results = exists.executeQuery();

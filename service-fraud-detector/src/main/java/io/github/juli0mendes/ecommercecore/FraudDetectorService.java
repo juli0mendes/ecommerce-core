@@ -43,10 +43,10 @@ public class FraudDetectorService {
         if (this.isFraud(order)) {
             // preteding that the fraud happends when the amount is => 4000
             System.out.println("Order is a fraud!!!!");
-            orderDipatcher.send("ECOMMERCE_ORDER_REJECTED", order.getUserId(), order);
+            orderDipatcher.send("ECOMMERCE_ORDER_REJECTED", order.getEmail(), order);
         } else {
             System.out.println("Approved: " + order);
-            orderDipatcher.send("ECOMMERCE_ORDER_APPROVED", order.getUserId(), order);
+            orderDipatcher.send("ECOMMERCE_ORDER_APPROVED", order.getEmail(), order);
         }
 
         System.out.println("Order processed");
