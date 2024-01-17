@@ -1,4 +1,4 @@
-package io.github.juli0mendes.ecommercecore;
+package io.github.juli0mendes.ecommerce;
 
 import java.math.BigDecimal;
 
