@@ -11,7 +11,8 @@
 		<module>common-kafka</module>
 		<module>service-users</module>
 		<module>service-http-ecommerce</module>
-	</modules>
+        <module>service-reading-report</module>
+    </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
