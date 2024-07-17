@@ -1,5 +1,6 @@
 package io.github.juli0mendes.ecommerce;
 
+import io.github.juli0mendes.ecommercecore.CorrelationId;
 import io.github.juli0mendes.ecommercecore.KafkaDispatcher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +27,15 @@ public class NewOrderController {
                     var order = new Order(orderId, amount, email);
                     var emailCode = new Email("fernanda@live.com", "Thank you for your order! We are processing your order");
 
-                    orderDipatcher.send("ECOMMERCE_NEW_ORDER", email, order);
-                    emailDipatcher.send("ECOMMERCE_SEND_EMAIL", email, emailCode);
+                    orderDipatcher.send("ECOMMERCE_NEW_ORDER",
+                            email,
+                            new CorrelationId(NewOrderController.class.getSimpleName()),
+                            order);
+
+                    emailDipatcher.send("ECOMMERCE_SEND_EMAIL",
+                            email,
+                            new CorrelationId(NewOrderController.class.getSimpleName()),
+                            emailCode);
 
                     System.out.println("New order sent successfully");
 

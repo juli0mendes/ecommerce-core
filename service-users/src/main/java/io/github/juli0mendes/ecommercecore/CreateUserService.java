@@ -46,10 +46,10 @@ public class CreateUserService {
         System.out.println("Procesing new order, checking for new user");
         System.out.println(record.value());
 
-        var order = record.value();
+        var order = record.value().getPayload();
 
-        if (this.isNewUser(order.getPayload().getEmail())) {
-            this.insertNewUser(order.getPayload().getEmail());
+        if (this.isNewUser(order.getEmail())) {
+            this.insertNewUser(order.getEmail());
         }
     }
 
